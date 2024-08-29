@@ -11,7 +11,7 @@ fetch('items.json')
       <image src="${items.image}" />
       <input type="number" placeholder="cantidad" onchange='inputChange(${i}, "${items.name}", "${items.price}", "${items.image}", "${items.id}")'/> <br>
       <button>Agregar al carrito</button> <br>
-      <button onclick ='eliminarProducto(${items.id})'> Eliminar orden</button>
+     
   </li>`
   }
 
@@ -76,75 +76,64 @@ clearCart.addEventListener('click', () => {
 
 
 
-//Aquí se renderiza el carrito
+// Aquí se renderiza el carrito
 function renderCart() {
-  let cartItems = document.getElementById('carrito')
+  let cartItems = document.getElementById('carrito');
   let total = 0;
-  cartItems.innerHTML = ''
+  cartItems.innerHTML = '';
+  
   cart.forEach((item) => {
-    total += item.price * item.quantity
-    cartItems.innerHTML += `<li>
-       <div>${item.name}</div>
-       <div>Cantidad: ${item.quantity}</div>
-       <div>Sub-total: ${item.quantity * item.price}</div>
-      <image src="${item.image}" />
+    total += item.price * item.quantity;
+    cartItems.innerHTML += `
+      <li>
+        <div>${item.name}</div>
+        <div>Cantidad: ${item.quantity}</div>
+        <div>Sub-total: $${item.quantity * item.price}</div>
+        <image src="${item.image}" />
+        <button onclick='eliminarProducto(${item.id})'>Eliminar del carrito</button>
+      </li>`;
+  });
 
-      </li>`
-  })
-
-  document.getElementById('total').innerHTML = '$' + total
+  document.getElementById('total').innerHTML = '$' + total;
 }
 
 
-
-// función invocada para pushear elementos al carrito 
+// Función invocada para manejar el cambio de input y agregar al carrito
 function inputChange(i, name, price, image, id) {
-  let listItem = document.querySelectorAll('li')[i]
-  let input = listItem.querySelector('input')
-  let button = listItem.querySelector('button')
+  let listItem = document.querySelectorAll('li')[i];
+  let input = listItem.querySelector('input');
+  let button = listItem.querySelector('button');
   
   const agregarItem = () => {
     cart.push({
-      quantity:input.value,
+      quantity: Number(input.value),
       name: name,
       price: price,
       image: image,
       id: id,
+    });
+  };
 
-    })
-  }
-
-  const alerta = () => {
-    swal({
-      title: "El item ya está en el carrito",
-      text: "Para modificar la cantidad elimine la orden previa",
-      icon: "warning",})
-
-
-  }
+  const actualizarCantidad = (item) => {
+    item.quantity += Number(input.value);
+  };
 
   if (input.value < 1) {
-
     swal(" ", "Debes agregar al menos 1", "error");
-    input.value = ""
-  }
-
-  else {
+    input.value = "";
+  } else {
     button.onclick = function () {
       let found = cart.find(element => element.id == id);
-      found ? alerta(found) : agregarItem()
-   
-      renderCart()
+      found ? actualizarCantidad(found) : agregarItem();
+      
+      renderCart();
 
-      //Aqui veo en consola el ID del producto cliqueado y el cart 
-
-      // console.log(cart)
-      // console.log(id)
-
-      localStorage.setItem('cartShop', JSON.stringify(cart))
-    }
+      // Aquí se guarda el carrito en el local storage
+      localStorage.setItem('cartShop', JSON.stringify(cart));
+    };
   }
 }
+
 
 
 

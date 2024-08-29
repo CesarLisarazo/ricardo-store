@@ -40,11 +40,12 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border: 2px solid #ff6e613b;
 }
 
 #lista li:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+
     cursor: pointer;
 }
 
@@ -55,9 +56,6 @@ li img {
     transition: transform 0.3s ease;
 }
 
-li img:hover {
-    transform: scale(1.05);
-}
 
 li div {
     margin-bottom: 10px;
@@ -84,40 +82,15 @@ input[type="number"] {
     text-align: center;
     margin-bottom: 10px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    -moz-appearance: textfield;
+ 
 }
 
-/* Restaurar los botones de incremento/decremento */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: auto;
-    width: 18px;
-    height: 18px;
-    background-color: #ff6f61;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-}
 
-input[type="number"]::-webkit-inner-spin-button:hover,
-input[type="number"]::-webkit-outer-spin-button:hover {
-    background-color: #ff4a3d;
-}
 
-input[type="number"]::-moz-inner-spin-button,
-input[type="number"]::-moz-outer-spin-button {
-    width: 18px;
-    height: 18px;
-    background-color: #ff6f61;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-}
 
-input[type="number"]::-moz-inner-spin-button:hover,
-input[type="number"]::-moz-outer-spin-button:hover {
-    background-color: #ff4a3d;
-}
+
+
+
 
 /* Botones */
 button {
@@ -132,9 +105,9 @@ button {
     margin-right: 8px;
 }
 
-button:hover {
+button:active {
     background-color: #ff4a3d;
-    transform: translateY(-5px);
+    transform: translateY(2px);
 }
 
 /* Botones en la esquina inferior izquierda */
